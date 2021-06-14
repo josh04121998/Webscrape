@@ -13,22 +13,17 @@ namespace Webscrape
 {
     public class Scraper
     {
-        private string url;
-        private static readonly Regex _classNameRegex = new Regex(@"\bfloat\b", RegexOptions.Compiled);
-        public Scraper(string WebUrl)
-        {
-            url = WebUrl;
-        }
+        private readonly string url = "https://www.seetickets.com/search?BrowseOrder=Relevance&q=&s=&se=false&c=3&dst=&dend=&l";
 
         private List<TicketDataDto> WebDataScrape()
         {
             List<TicketDataDto> listOfEvents = new List<TicketDataDto>();
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(url);
+                HtmlWeb web = new();
+                HtmlDocument htmlDoc = web.Load(url);
 
-                var EventName = doc.DocumentNode.SelectNodes("//span[@class='g-blocklist-sub-text ']");
+                var EventName = htmlDoc.DocumentNode.SelectNodes("//span[@class='g-blocklist-sub-text ']");
                 foreach (var item in EventName)
                 {
                     var splitWords = Regex.Split(item.InnerText, "\r\n\r\n");
@@ -74,7 +69,7 @@ namespace Webscrape
             var sb = new StringBuilder();
             foreach (var data in listOfEvents)
             {
-                sb.AppendLine(data.EventName + ", " + data.Venue + ", " + data.Date + ", " +data.ImageUrl + ", " + data.Status);
+                sb.AppendLine(data.EventName + ", " + data.Venue + ", " + data.Date);
             }
             Console.WriteLine(sb.ToString());
         }

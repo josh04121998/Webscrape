@@ -6,7 +6,7 @@ namespace Webscrape
     {
         static void Main(string[] args)
         {
-            Scraper scraper = new Scraper("https://www.seetickets.com/search?BrowseOrder=Relevance&q=&s=&se=false&c=3&dst=&dend=&l");
+            Scraper scraper = new Scraper();
             Console.WriteLine("///////////CSV/////////////////");
             scraper.ScrapeToCSV();
             Console.WriteLine("///////////JSON/////////////////");
