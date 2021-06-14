@@ -13,9 +13,7 @@ namespace Webscrape
 {
     public class Scraper
     {
-        private readonly string url = "https://www.seetickets.com/search?BrowseOrder=Relevance&q=&s=&se=false&c=3&dst=&dend=&l";
-
-        private List<TicketDataDto> WebDataScrape()
+        public List<TicketDataDto> Scrape(string url)
         {
             List<TicketDataDto> listOfEvents = new List<TicketDataDto>();
             try
@@ -45,27 +43,24 @@ namespace Webscrape
             return listOfEvents;
         }
 
-        public void ScrapeToJSON()
+        public void ConvertToJSON(List<TicketDataDto> listOfEvents)
         {
-            List<TicketDataDto> listOfEvents = WebDataScrape();
             Console.WriteLine(JsonConvert.SerializeObject(listOfEvents));
         }
 
-        public void ScrapeToXML()
+        public void ConvertToXML(List<TicketDataDto> listOfEvents)
         {
 
             using (var stringwriter = new System.IO.StringWriter())
             {
-                List<TicketDataDto> listOfEvents = WebDataScrape();
                 var serializer = new XmlSerializer(listOfEvents.GetType());
                 serializer.Serialize(stringwriter, listOfEvents);
                 Console.WriteLine(stringwriter.ToString());
             }
         }
 
-        public void ScrapeToCSV()
+        public void ConvertToCSV(List<TicketDataDto> listOfEvents)
         {
-            List<TicketDataDto> listOfEvents = WebDataScrape();
             var sb = new StringBuilder();
             foreach (var data in listOfEvents)
             {
